@@ -1,0 +1,263 @@
+[gd_scene load_steps=18 format=1]
+
+[ext_resource path="res://scenes/Game.gd" type="Script" id=1]
+[ext_resource path="res://assets/6axfm8uck3oy (1).tex" type="Texture" id=2]
+[ext_resource path="res://scripts/felpudo.gd" type="Script" id=3]
+[ext_resource path="res://assets/felpudo/sprite_0.png" type="Texture" id=4]
+[ext_resource path="res://assets/felpudo/sprite_1.png" type="Texture" id=5]
+[ext_resource path="res://assets/felpudo/sprite_2.png" type="Texture" id=6]
+[ext_resource path="res://assets/felpudo/sprite_3.png" type="Texture" id=7]
+[ext_resource path="res://assets/felpudo/sprite_4.png" type="Texture" id=8]
+[ext_resource path="res://scenes/cano.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scripts/gerador.gd" type="Script" id=10]
+[ext_resource path="res://assets/font160.fnt" type="BitmapFont" id=11]
+[ext_resource path="res://sound/somScore.ogg" type="AudioStream" id=12]
+[ext_resource path="res://sound/somHit.ogg" type="AudioStream" id=13]
+
+[sub_resource type="Animation" id=1]
+
+resource/name = "backanim"
+length = 10.0
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("backanim/Sprite1:transform/pos")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 10 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( -3945.59, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("backanim/Sprite2:transform/pos")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0, 10 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 3928.67, 0 ), Vector2( -16.0325, 0 ) ]
+}
+
+[sub_resource type="CircleShape2D" id=2]
+
+custom_solver_bias = 0.0
+radius = 8.18409
+
+[sub_resource type="SpriteFrames" id=3]
+
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+} ]
+
+[sub_resource type="SegmentShape2D" id=4]
+
+custom_solver_bias = 0.0
+a = Vector2( 0, 0 )
+b = Vector2( 1003.16, -2.18313 )
+
+[node name="GameNode" type="Node2D"]
+
+script/script = ExtResource( 1 )
+
+[node name="backanim" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/backanim = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "backanim"
+
+[node name="Sprite1" type="Sprite" parent="backanim"]
+
+transform/scale = Vector2( 3.07903, 2.48287 )
+texture = ExtResource( 2 )
+centered = false
+
+[node name="Sprite2" type="Sprite" parent="backanim"]
+
+transform/pos = Vector2( 3928.67, 0 )
+transform/scale = Vector2( 3.10371, 2.48287 )
+texture = ExtResource( 2 )
+centered = false
+
+[node name="Felpudo" type="RigidBody2D" parent="."]
+
+transform/pos = Vector2( 311.656, 270.558 )
+z/z = 1
+input/pickable = false
+shapes/0/shape = SubResource( 2 )
+shapes/0/transform = Matrix32( 6.74485, 0, 0, 6.48989, 43.4136, 10.2149 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+mode = 2
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 20.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+velocity/linear = Vector2( 0, 0 )
+velocity/angular = 0.0
+damp_override/linear = -1.0
+damp_override/angular = -1.0
+script/script = ExtResource( 3 )
+
+[node name="felpudoAnim" type="AnimatedSprite" parent="Felpudo"]
+
+transform/pos = Vector2( 41.9075, -9.34219 )
+transform/scale = Vector2( 13.1575, 13.1575 )
+frames = SubResource( 3 )
+animation = "default"
+frame = 1
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Felpudo"]
+
+transform/pos = Vector2( 43.4136, 10.2149 )
+transform/scale = Vector2( 6.74485, 6.48989 )
+shape = SubResource( 2 )
+trigger = false
+_update_shape_index = 0
+
+[node name="limites" type="StaticBody2D" parent="."]
+
+input/pickable = false
+shapes/0/shape = SubResource( 4 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, -0.620331, 1.5469 )
+shapes/0/trigger = false
+shapes/1/shape = SubResource( 4 )
+shapes/1/transform = Matrix32( 1, 0, 0, 1, -36.3607, 1724.45 )
+shapes/1/trigger = false
+collision/layers = 1
+collision/mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="limites"]
+
+transform/pos = Vector2( -0.620331, 1.5469 )
+shape = SubResource( 4 )
+trigger = false
+_update_shape_index = 0
+
+[node name="CollisionShape2D1" type="CollisionShape2D" parent="limites"]
+
+transform/pos = Vector2( -36.3607, 1724.45 )
+shape = SubResource( 4 )
+trigger = false
+_update_shape_index = 1
+
+[node name="Canos" type="Node2D" parent="."]
+
+transform/pos = Vector2( -905.388, -165.489 )
+z/z = 2
+
+[node name="cano" parent="Canos" instance=ExtResource( 9 )]
+
+transform/pos = Vector2( 1666.89, 716.191 )
+vel = -500
+
+[node name="gerador" type="Position2D" parent="Canos"]
+
+transform/pos = Vector2( 1766.13, 741.613 )
+script/script = ExtResource( 10 )
+
+[node name="Timer" type="Timer" parent="Canos/gerador"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = true
+
+[node name="time2dificultyUP" type="Timer" parent="Canos"]
+
+process_mode = 1
+wait_time = 15.0
+one_shot = false
+autostart = true
+
+[node name="TimeToReplay" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 2.0
+one_shot = false
+autostart = false
+
+[node name="Node2D" type="Node2D" parent="."]
+
+z/z = 3
+
+[node name="Control" type="Control" parent="Node2D"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 415.0
+margin/top = 7.0
+margin/right = 455.0
+margin/bottom = 47.0
+
+[node name="Label" type="Label" parent="Node2D/Control"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -117.0
+margin/top = 5.0
+margin/right = 276.0
+margin/bottom = 178.0
+custom_fonts/font = ExtResource( 11 )
+text = "0"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="SomScore" type="StreamPlayer" parent="."]
+
+stream/stream = ExtResource( 12 )
+stream/play = false
+stream/loop = false
+stream/volume_db = 0.0
+stream/autoplay = false
+stream/paused = false
+stream/loop_restart_time = 0.0
+stream/buffering_ms = 500
+
+[node name="SomHit" type="StreamPlayer" parent="."]
+
+stream/stream = ExtResource( 13 )
+stream/play = false
+stream/loop = false
+stream/volume_db = 0.0
+stream/autoplay = false
+stream/paused = false
+stream/loop_restart_time = 0.0
+stream/buffering_ms = 500
+
+[connection signal="timeout" from="Canos/gerador/Timer" to="Canos/gerador" method="_on_Timer_timeout"]
+
+[connection signal="timeout" from="Canos/time2dificultyUP" to="Canos/cano" method="_on_time2dificultyUP_timeout"]
+
+[connection signal="timeout" from="TimeToReplay" to="." method="_on_TimeToReplay_timeout"]
+
+
